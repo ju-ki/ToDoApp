@@ -1,9 +1,10 @@
 <?php 
 namespace controller\home;
-
+use db\TaskQuery;
 
 function get()
 {
-    require_once SOURCE_PATH . 'views/home.php';
+    $todos = TaskQuery::fetchTodo("test2");
+    \view\home\index($todos);
 }
  ?>
