@@ -5,11 +5,15 @@ use function lib\router;
 require_once 'config.php';
 
 require_once SOURCE_PATH . 'views/home.php';
+// require_once SOURCE_PATH . 'views/login.php';
 
-require_once SOURCE_PATH . "db/query.php";
+require_once SOURCE_PATH . "db/base.query.php";
 require_once SOURCE_PATH . "db/task.query.php";
+require_once SOURCE_PATH . "db/user.query.php";
 
 require_once SOURCE_PATH . "libs/router.php";
+require_once SOURCE_PATH . "libs/auth.php";
+
 
 
 

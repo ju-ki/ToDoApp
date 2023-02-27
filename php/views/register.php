@@ -12,10 +12,6 @@ namespace view\register;
         <label for="password">パスワード</label>
         <input type="password" name="password" id="password">
     </div>
-    <div class="email">
-        <label for="email">メールアドレス</label>
-        <input type="email" name="email" id="email" placeholder="test@example.com">
-    </div>
     <div class="submit">
         <input type="submit" value="Register">
     </div>
