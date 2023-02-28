@@ -6,14 +6,14 @@ use Throwable;
 
 class TaskQuery
 {
-    public static function fetchTodo(string $user_id)
+    public static function fetchTodo(string $user_name)
     {
         try
         {
             $db = new BaseQuery;
             $sql = "select * from tasks where user_id = :id";
             $result = $db->select($sql, [
-                ":id" => $user_id
+                ":id" => $user_name
             ]);
             return $result;
         }
@@ -24,18 +24,18 @@ class TaskQuery
     }
 
 
-    public static function registerTodo()
+    public static function registerTodo($user, $todo, $description="")
     {
         $is_success = false;
         try
         {
             $db = new BaseQuery;
-            $sql = "insert into tasks(title, description) values(:todo, :description) where user_id = :id";
+            $sql = "insert into tasks(title, description, user_id) values(:todo, :description, :user_id)";
             $db->transaction();
             $result = $db->executeSql($sql, [
-                ":todo" => "something2",
-                ":description" => "nothing",
-                ":id" => "test2"
+                ":todo" => $todo,
+                ":description" => $description,
+                ":user_id" => $user["user_name"]
             ]);
             $is_success = true;
         }
@@ -43,6 +43,7 @@ class TaskQuery
         {
             $db->rollback();
             $is_success = false;
+            echo $e->getMessage();
         }
         finally
         {

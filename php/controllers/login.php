@@ -3,6 +3,7 @@ namespace controller\login;
 
 use lib\Auth;
 
+use function lib\redirect;
 
 function get()
 {
@@ -11,8 +12,16 @@ function get()
 
 function post()
 {
-    $id = $_POST["user_name"];
+    $user_name = $_POST["user_name"];
     $pwd = $_POST["password"];
-    Auth::login($id, $pwd);
+    $is_success = Auth::login($user_name, $pwd);
+    if($is_success)
+    {
+        redirect("home");
+    }
+    else
+    {
+        redirect("referer");
+    }
 }
 ?>

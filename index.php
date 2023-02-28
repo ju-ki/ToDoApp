@@ -13,9 +13,12 @@ require_once SOURCE_PATH . "db/user.query.php";
 
 require_once SOURCE_PATH . "libs/router.php";
 require_once SOURCE_PATH . "libs/auth.php";
+require_once SOURCE_PATH . "libs/util.php";
+
+require_once SOURCE_PATH . "models/session.model.php";
 
 
-
+session_start();
 
 try
 {

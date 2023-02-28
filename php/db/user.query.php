@@ -6,14 +6,14 @@ use Throwable;
 
 class UserQuery
 {
-    public static function fetchUserId($user_id)
+    public static function fetchUserId($user_name)
     {
         try
         {
             $db = new BaseQuery;
-            $sql = "select * from users where id = :id";
+            $sql = "select * from users where user_name = :name";
             $result = $db->selectOne($sql, [
-                ":id" => $user_id
+                ":name" => $user_name
             ]);
             return $result;
         }
@@ -24,7 +24,7 @@ class UserQuery
     }
 
 
-    public static function registerUser($id, $pwd)
+    public static function registerUser($user_name, $pwd)
     {
         $is_success = false;
         try
@@ -34,9 +34,9 @@ class UserQuery
             $db->transaction();
             $pwd = password_hash($pwd, PASSWORD_DEFAULT);
             $result = $db->executeSql($sql, [
-                ":id" => $id,
+                ":id" => uniqid(),
                 ":pwd" => $pwd,
-                ":user_name" => "test3_user",
+                ":user_name" => $user_name,
             ]);
             $is_success = true;
         }
