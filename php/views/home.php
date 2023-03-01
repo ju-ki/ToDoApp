@@ -36,10 +36,14 @@ else
 </form>
 <h3>タスクリスト</h3>
 <?php foreach($todos as $todo):?>
-    <h3><?php echo $todo["title"] ?></h3>
-    <h5><?php echo $todo["description"] ?></h5>
+    <form action="" method="post">
+        <input type="text" name="<?php echo $todo['id']?>_title" value="<?php echo $todo["title"] ?>">
+        <input type="text" name="<?php echo $todo['id']?>_description" value="<?php echo $todo["description"] ?>">
+        <input type="hidden" name="fix button" value="<?php echo $todo['id']?>">
+        <input type="submit" value="Fix">
+    </form>
     <form action="" method="POST">
-        <input type="hidden" name="delete button" value="delete">
+        <input type="hidden" name="delete button" value="<?php echo $todo['id']?>">
         <input type="submit" value="Delete">
     </form>
 <?php endforeach; ?>
