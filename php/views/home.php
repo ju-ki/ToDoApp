@@ -43,6 +43,10 @@ else
         <input type="submit" value="Fix">
     </form>
     <form action="" method="POST">
+        <input type="hidden" name="done button" value="<?php echo $todo['status']?>">
+        <input type="submit" value="Done">
+    </form>
+    <form action="" method="POST">
         <input type="hidden" name="delete button" value="<?php echo $todo['id']?>">
         <input type="submit" value="Delete">
     </form>

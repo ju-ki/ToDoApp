@@ -1,5 +1,8 @@
 <?php
 namespace view\register;
+
+function register()
+{
 ?>
 
 <h1>Register Page</h1>
@@ -17,3 +20,7 @@ namespace view\register;
     </div>
 
 </form>
+
+<?php
+};
+?>

@@ -7,7 +7,7 @@ use function lib\redirect;
 
 function get()
 {
-    require_once SOURCE_PATH . "views/login.php";
+    \view\login\login();
 }
 
 function post()

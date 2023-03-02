@@ -16,9 +16,16 @@ function redirect($path)
     die();
 }
 
+
 function get_url($path)
 {
     return BASE_PATH . trim($path, "/");
+}
+
+
+function escape($val)
+{
+    return htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
 }
 
 ?>
