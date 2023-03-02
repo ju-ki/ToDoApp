@@ -8,7 +8,7 @@ use function lib\redirect;
 
 function get()
 {
-    require_once SOURCE_PATH . "/views/register.php";
+    \view\register\register();
 }
 
 function post()
@@ -28,4 +28,4 @@ function post()
     }
 }
 
- ?>
+?>

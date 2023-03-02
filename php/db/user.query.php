@@ -2,6 +2,7 @@
 namespace db;
 
 use db\BaseQuery;
+use model\ValidateModel;
 use Throwable;
 
 class UserQuery
@@ -20,6 +21,7 @@ class UserQuery
         catch(Throwable $e)
         {
             echo $e->getMessage();
+            return false;
         }
     }
 
@@ -27,31 +29,29 @@ class UserQuery
     public static function registerUser($user_name, $pwd)
     {
         $is_success = false;
+        if(!ValidateModel::isValidUserName($user_name) || !ValidateModel::isValidPassword($pwd))
+        {
+            return $is_success;
+        }
         try
         {
             $db = new BaseQuery;
             $sql = "insert into users(id, pwd, user_name) values(:id, :pwd, :user_name)";
             $db->transaction();
             $pwd = password_hash($pwd, PASSWORD_DEFAULT);
-            $result = $db->executeSql($sql, [
+            $db->executeSql($sql, [
                 ":id" => uniqid(),
                 ":pwd" => $pwd,
                 ":user_name" => $user_name,
             ]);
             $is_success = true;
+            $db->commit();
+            return $is_success;
         }
         catch(Throwable $e)
         {
             $db->rollback();
-            $is_success = false;
             echo $e->getMessage();
-        }
-        finally
-        {
-            if ($is_success)
-            {
-                $db->commit();
-            }
             return $is_success;
         }
     }

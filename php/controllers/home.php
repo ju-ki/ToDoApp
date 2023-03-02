@@ -25,9 +25,9 @@ function post()
     $user = SessionModel::getSession("_user");
     if(isset($_POST["add_button"]))
     {
-        $title = $_POST["title"];
-        $description = $_POST["description"];
-        $is_success = TaskQuery::registerTodo($user, $title, $description);
+        $task = $_POST;
+        var_dump($task);
+        $is_success = TaskQuery::registerTodo($user, $task);
         redirect("home");
         die();
     }
@@ -45,6 +45,10 @@ function post()
         $is_success = TaskQuery::updateTodo($user, $task, $task_id);
         redirect("");
         die();
+    }
+    else if(isset($_POST["done_button"]))
+    {
+        echo "Done";
     }
 }
 ?>

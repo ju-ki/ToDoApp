@@ -2,6 +2,7 @@
 namespace db;
 
 use db\BaseQuery;
+use model\ValidateModel;
 use Throwable;
 
 class TaskQuery
@@ -20,13 +21,18 @@ class TaskQuery
         catch(Throwable $e)
         {
             echo $e->getMessage();
+            return false;
         }
     }
 
 
-    public static function registerTodo($user, $todo, $description="")
+    public static function registerTodo($user, $task)
     {
         $is_success = false;
+        if (!ValidateModel::isValidTitle($task["title"]) || !ValidateModel::isValidDescription($task["description"]))
+        {
+            return $is_success;
+        }
         try
         {
             $db = new BaseQuery;
@@ -34,24 +40,19 @@ class TaskQuery
             $db->transaction();
             $result = $db->executeSql($sql, [
                 ":id" => uniqid(),
-                ":todo" => $todo,
-                ":description" => $description,
+                ":todo" => $task["title"],
+                ":description" => $task["description"],
                 ":user_id" => $user["id"]
             ]);
             $is_success = true;
+            $db->commit();
+            return $is_success;
         }
         catch(Throwable $e)
         {
             $db->rollback();
             $is_success = false;
             echo $e->getMessage();
-        }
-        finally
-        {
-            if($is_success)
-            {
-                $db->commit();
-            }
             return $is_success;
         }
     }
@@ -60,6 +61,10 @@ class TaskQuery
     public static function updateTodo($user, $task, $task_id)
     {
         $is_success = false;
+        if (!ValidateModel::isValidTitle($task[$task_id . "title"]) || !ValidateModel::isValidDescription($task[$task_id . "description"]))
+        {
+            return $is_success;
+        }
         try
         {
             $db = new BaseQuery;
@@ -77,17 +82,13 @@ class TaskQuery
                 ":task_id"=> $task_id
             ]);
             $is_success = true;
+            $db->commit();
+            return $is_success;
         }
         catch(Throwable $e)
         {
             $db->rollback();
-        }
-        finally
-        {
-            if($is_success)
-            {
-                $db->commit();
-            }
+            echo $e->getMessage();
             return $is_success;
         }
     }
@@ -106,19 +107,13 @@ class TaskQuery
                 ":task_id"=>$task_id
             ]);
             $is_success = true;
+            $db->commit();
+            return $is_success;
         }
         catch(Throwable $e)
         {
             $db->rollback();
-            $is_success = false;
             echo $e->getMessage();
-        }
-        finally
-        {
-            if($is_success)
-            {
-                $db->commit();
-            }
             return $is_success;
         }
     }
